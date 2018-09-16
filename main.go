@@ -1,12 +1,24 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 )
+
+// Todo タスク
+type Todo struct {
+	Name      string    `json:"name"`
+	Completed bool      `json:"completed"`
+	Due       time.Time `json:"due"`
+}
+
+// Todos タスクの配列
+type Todos []Todo
 
 func main() {
 
@@ -24,7 +36,12 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 //TodoIndex ハンドラ
 func TodoIndex(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Todo Index!")
+	todos := Todos{
+		Todo{Name: "Write presentation"},
+		Todo{Name: "Host meetup"},
+	}
+
+	json.NewEncoder(w).Encode(todos)
 }
 
 //TodoShow ハンドラ
