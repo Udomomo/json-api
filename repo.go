@@ -13,14 +13,14 @@ func init() {
 }
 
 // RepoFindTodo 項目を検索
-func RepoFindTodo(id int) Todo {
+func RepoFindTodo(id int) (Todo, bool) {
 	for _, t := range todos {
 		if t.ID == id {
-			return t
+			return t, true
 		}
 	}
 	// return empty Todo if not found
-	return Todo{}
+	return Todo{}, false
 }
 
 // RepoCreateTodo 項目を作成

@@ -31,8 +31,18 @@ func TodoIndex(w http.ResponseWriter, r *http.Request) {
 //TodoShow ハンドラ
 func TodoShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	todoID, _ := strconv.Atoi(vars["todoID"])
-	todo := RepoFindTodo(todoID)
+	todoID, err := strconv.Atoi(vars["todoID"])
+	if err != nil {
+		panic(err)
+	}
+
+	todo, ok := RepoFindTodo(todoID)
+	if ok != true {
+		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+		w.WriteHeader(404)
+		fmt.Fprintln(w, "No such id exists")
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
