@@ -31,7 +31,7 @@ var routes = Routes{
 	Route{
 		"TodoShow",
 		"GET",
-		"/todos/{todoId}",
+		"/todos/{todoID}",
 		TodoShow,
 	},
 	Route{
